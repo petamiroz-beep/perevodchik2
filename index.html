@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Простой переводчик</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin: 10px 0;
+            padding: 10px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Онлайн переводчик</h2>
+        <div class="row">
+            <select id="sourceLang">
+                <option value="ru">Русский</option>
+                <option value="en">Английский</option>
+                <option value="es">Испанский</option>
+                <option value="fr">Французский</option>
+                <option value="de">Немецкий</option>
+            </select>
+            →
+            <select id="targetLang">
+                <option value="en">Английский</option>
+                <option value="ru">Русский</option>
+                <option value="es">Испанский</option>
+                <option value="fr">Французский</option>
+                <option value="de">Немецкий</option>
+            </select>
+        </div>
+        
+        <textarea id="sourceText" placeholder="Введите текст для перевода..."></textarea>
+        
+        <button onclick="translateText()">Перевести</button>
+        
+        <textarea id="translatedText" placeholder="Результат перевода..." readonly></textarea>
+    </div>
+
+    <script>
+        // Замените этот ключ на ваш API-ключ от Yandex Translate
+        const API_KEY = 'ваш_api_ключ_здесь';
+        const TRANSLATE_URL = 'https://translate.yandex.net/api/v1.5/tr.json/translate';
+
+        async function translateText() {
+            const sourceText = document.getElementById('sourceText').value;
+            const sourceLang = document.getElementById('sourceLang').value;
+            const targetLang = document.getElementById('targetLang').value;
+            const resultElement = document.getElementById('translatedText');
+
+            if (!sourceText.trim()) {
+                resultElement.value = 'Введите текст для перевода';
+                return;
+            }
+
+            try {
+                const response = await fetch(
+                    `${TRANSLATE_URL}?key=${API_KEY}&text=${encodeURIComponent(sourceText)}&lang=${sourceLang}-${targetLang}`
+                );
+                
+                const data = await response.json();
+                
+                if (data.code === 200) {
+                    resultElement.value = data.text[0];
+                } else {
+                    resultElement.value = 'Ошибка перевода';
+                }
+            } catch (error) {
+                resultElement.value = 'Ошибка соединения';
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+</html>
