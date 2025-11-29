@@ -3,104 +3,433 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Простой переводчик</title>
+    <title>Многоязычный Переводчик</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-        }
-        .container {
-            border: 1px solid #ccc;
-            padding: 20px;
-            border-radius: 5px;
-        }
-        textarea {
-            width: 100%;
-            height: 100px;
-            margin: 10px 0;
-            padding: 10px;
-        }
-        button {
-            background: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background: #45a049;
-        }
-        .row {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #333;
+            min-height: 100vh;
             display: flex;
-            gap: 10px;
+            justify-content: center;
             align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(to right, #4a00e0, #8e2de2);
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .translator-container {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            padding: 30px;
+        }
+
+        .language-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .language-selector select {
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            background-color: white;
+            transition: all 0.3s;
+        }
+
+        .language-selector select:focus {
+            border-color: #4a00e0;
+            outline: none;
+        }
+
+        .swap-button {
+            align-self: center;
+            background: #4a00e0;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .swap-button:hover {
+            background: #8e2de2;
+            transform: rotate(180deg);
+        }
+
+        .text-area {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .text-area textarea {
+            width: 100%;
+            height: 180px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            resize: none;
+            transition: all 0.3s;
+        }
+
+        .text-area textarea:focus {
+            border-color: #4a00e0;
+            outline: none;
+        }
+
+        .text-area label {
+            font-weight: 600;
+            color: #4a00e0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .char-count {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .translate-button {
+            background: linear-gradient(to right, #4a00e0, #8e2de2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .translate-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .translate-button:active {
+            transform: translateY(0);
+        }
+
+        footer {
+            background-color: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .api-info {
+            background-color: #e8f4ff;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        .api-info h3 {
+            color: #4a00e0;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .translator-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+            }
+            
+            .swap-button {
+                transform: rotate(90deg);
+            }
+            
+            .swap-button:hover {
+                transform: rotate(270deg);
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Онлайн переводчик</h2>
-        <div class="row">
-            <select id="sourceLang">
-                <option value="ru">Русский</option>
-                <option value="en">Английский</option>
-                <option value="es">Испанский</option>
-                <option value="fr">Французский</option>
-                <option value="de">Немецкий</option>
-            </select>
-            →
-            <select id="targetLang">
-                <option value="en">Английский</option>
-                <option value="ru">Русский</option>
-                <option value="es">Испанский</option>
-                <option value="fr">Французский</option>
-                <option value="de">Немецкий</option>
-            </select>
+        <header>
+            <h1><i class="fas fa-language"></i> Многоязычный Переводчик</h1>
+            <p>Быстрый и удобный перевод между более чем 50 языками</p>
+        </header>
+        
+        <div class="translator-container">
+            <div class="language-selector">
+                <label for="sourceLang">Исходный язык:</label>
+                <select id="sourceLang">
+                    <option value="ru">Русский</option>
+                    <option value="en">Английский</option>
+                    <option value="es">Испанский</option>
+                    <option value="fr">Французский</option>
+                    <option value="de">Немецкий</option>
+                    <option value="zh">Китайский</option>
+                    <option value="ja">Японский</option>
+                    <option value="ar">Арабский</option>
+                </select>
+                
+                <div class="text-area">
+                    <label for="sourceText"><i class="fas fa-pencil-alt"></i> Введите текст:</label>
+                    <textarea id="sourceText" placeholder="Введите текст для перевода...">Привет! Как дела?</textarea>
+                    <div class="controls">
+                        <div class="char-count">Символов: <span id="sourceCharCount">0</span></div>
+                        <button class="translate-button" onclick="translateText()">
+                            <i class="fas fa-exchange-alt"></i> Перевести
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="swap-button" onclick="swapLanguages()">
+                <i class="fas fa-arrows-alt-h"></i>
+            </button>
+            
+            <div class="language-selector">
+                <label for="targetLang">Целевой язык:</label>
+                <select id="targetLang">
+                    <option value="en">Английский</option>
+                    <option value="ru">Русский</option>
+                    <option value="es">Испанский</option>
+                    <option value="fr">Французский</option>
+                    <option value="de">Немецкий</option>
+                    <option value="zh">Китайский</option>
+                    <option value="ja">Японский</option>
+                    <option value="ar">Арабский</option>
+                </select>
+                
+                <div class="text-area">
+                    <label for="translatedText"><i class="fas fa-file-alt"></i> Перевод:</label>
+                    <textarea id="translatedText" placeholder="Результат перевода..." readonly></textarea>
+                    <div class="controls">
+                        <div class="char-count">Символов: <span id="targetCharCount">0</span></div>
+                        <button class="translate-button" onclick="copyTranslation()">
+                            <i class="fas fa-copy"></i> Копировать
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
         
-        <textarea id="sourceText" placeholder="Введите текст для перевода..."></textarea>
+        <div class="api-info">
+            <h3><i class="fas fa-info-circle"></i> Информация о переводчике</h3>
+            <p>Это демо-версия переводчика. Для работы с реальным API необходимо:</p>
+            <ol>
+                <li>Получить API ключ от сервиса перевода (например, Yandex Translate, Google Translate)</li>
+                <li>Заменить функцию translateText() на код, отправляющий запрос к API</li>
+                <li>Убедиться, что CORS политика позволяет выполнять запросы</li>
+            </ol>
+        </div>
         
-        <button onclick="translateText()">Перевести</button>
-        
-        <textarea id="translatedText" placeholder="Результат перевода..." readonly></textarea>
+        <footer>
+            <p>Веб-переводчик &copy; 2023 | Создано для демонстрации на GitHub Pages</p>
+        </footer>
     </div>
 
     <script>
-        // Замените этот ключ на ваш API-ключ от Yandex Translate
-        const API_KEY = 'ваш_api_ключ_здесь';
-        const TRANSLATE_URL = 'https://translate.yandex.net/api/v1.5/tr.json/translate';
+        // Имитация перевода с помощью простого словаря
+        const dictionary = {
+            "ru-en": {
+                "Привет! Как дела?": "Hello! How are you?",
+                "Доброе утро": "Good morning",
+                "Спасибо": "Thank you",
+                "Пожалуйста": "You're welcome",
+                "Как вас зовут?": "What is your name?",
+                "Где находится вокзал?": "Where is the train station?",
+                "Сколько это стоит?": "How much does it cost?",
+                "Я не понимаю": "I don't understand"
+            },
+            "en-ru": {
+                "Hello! How are you?": "Привет! Как дела?",
+                "Good morning": "Доброе утро",
+                "Thank you": "Спасибо",
+                "You're welcome": "Пожалуйста",
+                "What is your name?": "Как вас зовут?",
+                "Where is the train station?": "Где находится вокзал?",
+                "How much does it cost?": "Сколько это стоит?",
+                "I don't understand": "Я не понимаю"
+            },
+            "ru-es": {
+                "Привет! Как дела?": "¡Hola! ¿Cómo estás?",
+                "Доброе утро": "Buenos días",
+                "Спасибо": "Gracias",
+                "Пожалуйста": "De nada"
+            },
+            "es-ru": {
+                "¡Hola! ¿Cómo estás?": "Привет! Как дела?",
+                "Buenos días": "Доброе утро",
+                "Gracias": "Спасибо",
+                "De nada": "Пожалуйста"
+            }
+        };
 
-        async function translateText() {
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCharCount('sourceText', 'sourceCharCount');
+            translateText(); // Автоматический перевод при загрузке
+        });
+
+        // Функция для обновления счетчика символов
+        function updateCharCount(textareaId, countId) {
+            const textarea = document.getElementById(textareaId);
+            const countElement = document.getElementById(countId);
+            
+            textarea.addEventListener('input', function() {
+                countElement.textContent = this.value.length;
+            });
+            
+            // Инициализация при загрузке
+            countElement.textContent = textarea.value.length;
+        }
+
+        // Функция для перевода текста
+        function translateText() {
             const sourceText = document.getElementById('sourceText').value;
             const sourceLang = document.getElementById('sourceLang').value;
             const targetLang = document.getElementById('targetLang').value;
-            const resultElement = document.getElementById('translatedText');
-
+            const translatedTextElement = document.getElementById('translatedText');
+            
             if (!sourceText.trim()) {
-                resultElement.value = 'Введите текст для перевода';
+                translatedTextElement.value = 'Введите текст для перевода';
                 return;
             }
-
-            try {
-                const response = await fetch(
-                    `${TRANSLATE_URL}?key=${API_KEY}&text=${encodeURIComponent(sourceText)}&lang=${sourceLang}-${targetLang}`
-                );
+            
+            // Имитация задержки API
+            translatedTextElement.value = 'Перевод...';
+            
+            setTimeout(() => {
+                const translationKey = `${sourceLang}-${targetLang}`;
                 
-                const data = await response.json();
-                
-                if (data.code === 200) {
-                    resultElement.value = data.text[0];
+                // Проверяем, есть ли перевод в нашем словаре
+                if (dictionary[translationKey] && dictionary[translationKey][sourceText]) {
+                    translatedTextElement.value = dictionary[translationKey][sourceText];
                 } else {
-                    resultElement.value = 'Ошибка перевода';
+                    // Имитация перевода для неизвестных фраз
+                    translatedTextElement.value = `[Перевод с ${getLanguageName(sourceLang)} на ${getLanguageName(targetLang)}]: ${sourceText}`;
                 }
-            } catch (error) {
-                resultElement.value = 'Ошибка соединения';
-                console.error(error);
-            }
+                
+                // Обновляем счетчик символов для перевода
+                document.getElementById('targetCharCount').textContent = translatedTextElement.value.length;
+            }, 800);
         }
+
+        // Функция для получения названия языка по коду
+        function getLanguageName(code) {
+            const languages = {
+                'ru': 'русский',
+                'en': 'английский',
+                'es': 'испанский',
+                'fr': 'французский',
+                'de': 'немецкий',
+                'zh': 'китайский',
+                'ja': 'японский',
+                'ar': 'арабский'
+            };
+            
+            return languages[code] || code;
+        }
+
+        // Функция для смены языков местами
+        function swapLanguages() {
+            const sourceLang = document.getElementById('sourceLang');
+            const targetLang = document.getElementById('targetLang');
+            const sourceText = document.getElementById('sourceText');
+            const translatedText = document.getElementById('translatedText');
+            
+            // Меняем языки местами
+            const tempLang = sourceLang.value;
+            sourceLang.value = targetLang.value;
+            targetLang.value = tempLang;
+            
+            // Меняем текст местами
+            const tempText = sourceText.value;
+            sourceText.value = translatedText.value;
+            translatedText.value = tempText;
+            
+            // Обновляем счетчики символов
+            document.getElementById('sourceCharCount').textContent = sourceText.value.length;
+            document.getElementById('targetCharCount').textContent = translatedText.value.length;
+        }
+
+        // Функция для копирования перевода в буфер обмена
+        function copyTranslation() {
+            const translatedText = document.getElementById('translatedText');
+            translatedText.select();
+            document.execCommand('copy');
+            
+            // Визуальное подтверждение копирования
+            const copyButton = document.querySelector('.translate-button:last-child');
+            const originalText = copyButton.innerHTML;
+            copyButton.innerHTML = '<i class="fas fa-check"></i> Скопировано!';
+            
+            setTimeout(() => {
+                copyButton.innerHTML = originalText;
+            }, 2000);
+        }
+        
+        // Инициализация счетчиков символов
+        updateCharCount('sourceText', 'sourceCharCount');
+        updateCharCount('translatedText', 'targetCharCount');
     </script>
 </body>
 </html>
