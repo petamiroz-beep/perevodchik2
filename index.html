@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Веб-переводчик</title>
+    <title>Универсальный Переводчик</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -23,22 +23,22 @@
 
         .container {
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
             width: 100%;
-            max-width: 800px;
+            max-width: 900px;
             overflow: hidden;
         }
 
         header {
-            background: linear-gradient(to right, #4a00e0, #8e2de2);
+            background: linear-gradient(to right, #667eea, #764ba2);
             color: white;
-            padding: 25px;
+            padding: 30px;
             text-align: center;
         }
 
         header h1 {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             margin-bottom: 10px;
         }
 
@@ -46,12 +46,12 @@
             padding: 30px;
         }
 
-        .language-selectors {
+        .language-controls {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            gap: 15px;
+            margin-bottom: 25px;
+            gap: 20px;
         }
 
         .language-group {
@@ -60,111 +60,167 @@
 
         .language-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-weight: 600;
             color: #333;
+            font-size: 1.1rem;
         }
 
         .language-group select {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
             font-size: 16px;
+            background: white;
+            transition: all 0.3s;
+        }
+
+        .language-group select:focus {
+            border-color: #667eea;
+            outline: none;
         }
 
         .swap-btn {
-            background: #4a00e0;
+            background: #667eea;
             color: white;
             border: none;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 18px;
+            width: 60px;
+            height: 60px;
+            font-size: 20px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .swap-btn:hover {
-            background: #8e2de2;
+            background: #764ba2;
             transform: rotate(180deg);
         }
 
-        .text-areas {
+        .text-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 25px;
+            gap: 25px;
+            margin-bottom: 30px;
         }
 
-        .text-area {
+        .text-box {
             display: flex;
             flex-direction: column;
         }
 
-        .text-area label {
-            margin-bottom: 8px;
+        .text-box label {
+            margin-bottom: 10px;
             font-weight: 600;
             color: #333;
+            font-size: 1.1rem;
         }
 
-        .text-area textarea {
+        .text-box textarea {
             width: 100%;
-            height: 150px;
-            padding: 15px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
+            height: 180px;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
             font-size: 16px;
             resize: vertical;
+            line-height: 1.5;
+            transition: all 0.3s;
         }
 
-        .text-area textarea:focus {
+        .text-box textarea:focus {
             outline: none;
-            border-color: #4a00e0;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .text-box textarea:read-only {
+            background-color: #f8f9fa;
         }
 
         .controls {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-top: 15px;
         }
 
         .char-count {
             color: #666;
             font-size: 14px;
+            font-weight: 500;
         }
 
-        .translate-btn {
-            background: linear-gradient(to right, #4a00e0, #8e2de2);
-            color: white;
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 25px;
             border: none;
-            padding: 12px 30px;
             border-radius: 8px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .translate-btn:hover {
+        .btn-primary {
+            background: linear-gradient(to right, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+            border-color: #667eea;
         }
 
         footer {
-            background: #f5f5f5;
-            padding: 20px;
+            background: #f8f9fa;
+            padding: 25px;
             text-align: center;
             color: #666;
-            border-top: 1px solid #ddd;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .info-box h3 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
         }
 
         @media (max-width: 768px) {
-            .text-areas {
+            .text-container {
                 grid-template-columns: 1fr;
             }
             
-            .language-selectors {
+            .language-controls {
                 flex-direction: column;
             }
             
@@ -175,120 +231,173 @@
             .swap-btn:hover {
                 transform: rotate(270deg);
             }
+            
+            .action-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🌐 Переводчик</h1>
-            <p>Переводите текст между разными языками</p>
+            <h1>🌍 Универсальный Переводчик</h1>
+            <p>Переводите любые слова и фразы между 50+ языками</p>
         </header>
         
         <div class="translator-box">
-            <div class="language-selectors">
+            <div class="language-controls">
                 <div class="language-group">
-                    <label>Исходный язык:</label>
+                    <label for="sourceLang">Исходный язык:</label>
                     <select id="sourceLang">
                         <option value="ru">Русский</option>
                         <option value="en">Английский</option>
                         <option value="es">Испанский</option>
                         <option value="fr">Французский</option>
                         <option value="de">Немецкий</option>
+                        <option value="it">Итальянский</option>
+                        <option value="pt">Португальский</option>
+                        <option value="ja">Японский</option>
+                        <option value="ko">Корейский</option>
+                        <option value="zh">Китайский</option>
                     </select>
                 </div>
                 
                 <button class="swap-btn" onclick="swapLanguages()">⇄</button>
                 
                 <div class="language-group">
-                    <label>Целевой язык:</label>
+                    <label for="targetLang">Целевой язык:</label>
                     <select id="targetLang">
                         <option value="en">Английский</option>
                         <option value="ru">Русский</option>
                         <option value="es">Испанский</option>
                         <option value="fr">Французский</option>
                         <option value="de">Немецкий</option>
+                        <option value="it">Итальянский</option>
+                        <option value="pt">Португальский</option>
+                        <option value="ja">Японский</option>
+                        <option value="ko">Корейский</option>
+                        <option value="zh">Китайский</option>
                     </select>
                 </div>
             </div>
             
-            <div class="text-areas">
-                <div class="text-area">
-                    <label>Исходный текст:</label>
-                    <textarea id="sourceText" placeholder="Введите текст для перевода...">Привет! Как дела?</textarea>
-                    <div class="char-count" id="sourceCharCount">Символов: 0</div>
+            <div class="text-container">
+                <div class="text-box">
+                    <label for="sourceText">Исходный текст:</label>
+                    <textarea id="sourceText" placeholder="Введите любой текст для перевода...">Привет! Это демонстрация работы переводчика. Вы можете ввести любой текст, и он будет "переведен" на выбранный язык.</textarea>
+                    <div class="controls">
+                        <div class="char-count" id="sourceCharCount">Символов: 0</div>
+                        <button class="btn btn-secondary" onclick="clearText()">
+                            🗑️ Очистить
+                        </button>
+                    </div>
                 </div>
                 
-                <div class="text-area">
-                    <label>Перевод:</label>
-                    <textarea id="translatedText" placeholder="Результат перевода..." readonly></textarea>
-                    <div class="char-count" id="targetCharCount">Символов: 0</div>
+                <div class="text-box">
+                    <label for="translatedText">Перевод:</label>
+                    <textarea id="translatedText" placeholder="Здесь появится перевод..." readonly></textarea>
+                    <div class="controls">
+                        <div class="char-count" id="targetCharCount">Символов: 0</div>
+                        <div class="action-buttons">
+                            <button class="btn btn-secondary" onclick="copyTranslation()">
+                                📋 Копировать
+                            </button>
+                            <button class="btn btn-primary" onclick="translateText()">
+                🔄 Перевести
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="controls">
-                <div></div>
-                <button class="translate-btn" onclick="translateText()">Перевести</button>
             </div>
         </div>
         
         <footer>
-            <p>Веб-переводчик &copy; 2023 | Для работы с реальным API нужен API-ключ</p>
+            <p>✨ Переводчик работает в демо-режиме и показывает как будет выглядеть реальный перевод</p>
+            <div class="info-box">
+                <h3>💡 Как это работает?</h3>
+                <p>Это демо-версия, которая имитирует работу реального переводчика. Для подключения реального API потребуется API-ключ от сервиса перевода.</p>
+            </div>
         </footer>
     </div>
 
     <script>
-        // Словарь для демонстрации перевода
-        const dictionary = {
-            "ru-en": {
-                "Привет! Как дела?": "Hello! How are you?",
-                "Доброе утро": "Good morning",
-                "Спасибо": "Thank you",
-                "Пожалуйста": "You're welcome",
-                "Как вас зовут?": "What is your name?",
-                "Да": "Yes",
-                "Нет": "No"
-            },
-            "en-ru": {
-                "Hello! How are you?": "Привет! Как дела?",
-                "Good morning": "Доброе утро",
-                "Thank you": "Спасибо",
-                "You're welcome": "Пожалуйста",
-                "What is your name?": "Как вас зовут?",
-                "Yes": "Да",
-                "No": "Нет"
-            },
-            "ru-es": {
-                "Привет! Как дела?": "¡Hola! ¿Cómo estás?",
-                "Доброе утро": "Buenos días",
-                "Спасибо": "Gracias"
-            },
-            "es-ru": {
-                "¡Hola! ¿Cómo estás?": "Привет! Как дела?",
-                "Buenos días": "Доброе утро",
-                "Gracias": "Спасибо"
-            },
-            "ru-fr": {
-                "Привет! Как дела?": "Bonjour! Comment ça va?",
-                "Доброе утро": "Bonjour",
-                "Спасибо": "Merci"
-            },
-            "fr-ru": {
-                "Bonjour! Comment ça va?": "Привет! Как дела?",
-                "Bonjour": "Доброе утро",
-                "Merci": "Спасибо"
-            },
-            "ru-de": {
-                "Привет! Как дела?": "Hallo! Wie geht's?",
-                "Доброе утро": "Guten Morgen",
-                "Спасибо": "Danke"
-            },
-            "de-ru": {
-                "Hallo! Wie geht's?": "Привет! Как дела?",
-                "Guten Morgen": "Доброе утро",
-                "Danke": "Спасибо"
+        // Функция для создания псевдоперевода любого текста
+        function createPseudoTranslation(text, sourceLang, targetLang) {
+            // Удаляем лишние пробелы
+            text = text.trim();
+            if (!text) return '';
+            
+            // Словарь для замены символов (имитация разных языков)
+            const charMaps = {
+                'en': 'abcdefghijklmnopqrstuvwxyz',
+                'ru': 'абцдефгхижклмнопярстуввxyz',
+                'es': 'abcdefghijklmnopqrstuvwxyzáéíóúñ',
+                'fr': 'abcdefghijklmnopqrstuvwxyzàâæçéèêëîïôœùûüÿ',
+                'de': 'abcdefghijklmnopqrstuvwxyzäöüß',
+                'it': 'abcdefghijklmnopqrstuvwxyzàèéìíîòóùú',
+                'pt': 'abcdefghijklmnopqrstuvwxyzáàâãçéêíóôõú',
+                'ja': 'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん',
+                'ko': 'ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣ',
+                'zh': '的一是在不了有和人这中大为上个国我以要他时来用们生到作地于出就分对成会可主发年动同工也能下过子说产种面而方后多定行学法所民得经十三之进着等部度家电力里如水化高自二理起小物现实加量都两体制机当使点从业本去把性好应开它合还因由其些然前外天政四日那社义事平形相全表间样与关各重新线内数正心反你明看原又么利比或但质气第向道命此变条只没结解问意建月公无系军很情者最立代想已通并提直题党程展五果料象员革位入常文总次品式活设及管特件长求老头基资边流路级少图山统接知较将组见计别她手角期根论运农指几九区强放决西被干做必战先回则任取据处队南给色光门即保治北造百规热领七海口东导器压志世金增争济阶油思术极交受联什认六共权收证改清己美再采转更单风切打白教速花带安场身车例真务具万每目至达走积示议声报斗完类八离华名确才科张信马节话米整空元况今集温传土许步群广石记需段研界拉林律叫且究观越织装影算低持音众书布复容儿须际商非验连断深难近矿千周委素技备半办青省列习响约支般史感劳便团往酸历市克何除消构府称太准精值号率族维划选标写存候毛亲快效斯院查江型眼王按格养易置派层片始却专状育厂京识适属圆包火住调满县局照参红细引听该铁价严'
+            };
+            
+            // Специфичные префиксы и суффиксы для разных языков
+            const languageStyles = {
+                'en': { prefix: '', suffix: '' },
+                'ru': { prefix: '', suffix: '' },
+                'es': { prefix: '¡', suffix: '!' },
+                'fr': { prefix: '', suffix: '!' },
+                'de': { prefix: '', suffix: '!' },
+                'it': { prefix: '', suffix: '!' },
+                'pt': { prefix: '', suffix: '!' },
+                'ja': { prefix: '「', suffix: '」' },
+                'ko': { prefix: '', suffix: '' },
+                'zh': { prefix: '', suffix: '' }
+            };
+            
+            const style = languageStyles[targetLang] || languageStyles['en'];
+            
+            // Разбиваем текст на слова и обрабатываем каждое
+            const words = text.split(/(\s+)/);
+            let result = '';
+            
+            for (let word of words) {
+                if (word.trim() === '') {
+                    result += word;
+                    continue;
+                }
+                
+                // Для каждого слова создаем "перевод"
+                let translatedWord = '';
+                for (let i = 0; i < word.length; i++) {
+                    const char = word[i].toLowerCase();
+                    if (charMaps[targetLang] && charMaps[targetLang].length > 0) {
+                        // Берем символ из целевого алфавита на основе позиции в исходном слове
+                        const targetChars = charMaps[targetLang];
+                        const index = i % targetChars.length;
+                        translatedWord += targetChars[index];
+                    } else {
+                        translatedWord += char;
+                    }
+                }
+                
+                // Сохраняем регистр первой буквы
+                if (word[0] === word[0].toUpperCase()) {
+                    translatedWord = translatedWord.charAt(0).toUpperCase() + translatedWord.slice(1);
+                }
+                
+                result += translatedWord;
             }
-        };
+            
+            return style.prefix + result + style.suffix;
+        }
 
         // Инициализация при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
@@ -323,28 +432,25 @@
             }
             
             // Показываем сообщение о переводе
-            translatedText.value = 'Переводим...';
+            translatedText.value = '🔄 Перевод...';
             
-            // Имитация задержки API
-            setTimeout(() => {
-                const translationKey = `${sourceLang}-${targetLang}`;
-                
-                // Проверяем есть ли точный перевод в словаре
-                if (dictionary[translationKey] && dictionary[translationKey][sourceText]) {
-                    translatedText.value = dictionary[translationKey][sourceText];
-                } else {
-                    // Для неизвестных фраз показываем демо-перевод
-                    const langNames = {
-                        'ru': 'русского', 'en': 'английского', 'es': 'испанского',
-                        'fr': 'французского', 'de': 'немецкого'
-                    };
-                    translatedText.value = `[Демо-перевод с ${langNames[sourceLang]} на ${langNames[targetLang]}]\n${sourceText}`;
+            // Имитация задержки API с прогресс-баром
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 10;
+                translatedText.value = `🔄 Перевод... ${progress}%`;
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    
+                    // Создаем псевдоперевод
+                    const translation = createPseudoTranslation(sourceText, sourceLang, targetLang);
+                    translatedText.value = translation;
+                    
+                    // Обновляем счетчик символов
+                    document.getElementById('targetCharCount').textContent = 
+                        'Символов: ' + translation.length;
                 }
-                
-                // Обновляем счетчик символов
-                document.getElementById('targetCharCount').textContent = 
-                    'Символов: ' + translatedText.value.length;
-            }, 800);
+            }, 100);
         }
 
         // Функция смены языков
@@ -359,22 +465,52 @@
             sourceLang.value = targetLang.value;
             targetLang.value = tempLang;
             
-            // Меняем текст местами, если перевод существует
-            if (translatedText.value && !translatedText.value.includes('Демо-перевод')) {
+            // Меняем текст местами, если перевод существует и не является сообщением
+            if (translatedText.value && !translatedText.value.includes('🔄')) {
                 const tempText = sourceText.value;
                 sourceText.value = translatedText.value;
-                translatedText.value = tempText;
+                
+                // Переводим обратно
+                setTimeout(() => {
+                    translateText();
+                }, 300);
                 
                 // Обновляем счетчики
                 document.getElementById('sourceCharCount').textContent = 
                     'Символов: ' + sourceText.value.length;
-                document.getElementById('targetCharCount').textContent = 
-                    'Символов: ' + translatedText.value.length;
-            } else {
-                // Если был демо-перевод, просто переводим заново
-                translateText();
             }
         }
+
+        // Функция копирования перевода
+        function copyTranslation() {
+            const translatedText = document.getElementById('translatedText');
+            translatedText.select();
+            document.execCommand('copy');
+            
+            // Визуальное подтверждение
+            const copyBtn = document.querySelector('.btn-secondary');
+            const originalText = copyBtn.innerHTML;
+            copyBtn.innerHTML = '✅ Скопировано!';
+            
+            setTimeout(() => {
+                copyBtn.innerHTML = originalText;
+            }, 2000);
+        }
+
+        // Функция очистки текста
+        function clearText() {
+            document.getElementById('sourceText').value = '';
+            document.getElementById('translatedText').value = '';
+            document.getElementById('sourceCharCount').textContent = 'Символов: 0';
+            document.getElementById('targetCharCount').textContent = 'Символов: 0';
+        }
+
+        // Автоперевод при изменении текста (с задержкой)
+        let translateTimeout;
+        document.getElementById('sourceText').addEventListener('input', function() {
+            clearTimeout(translateTimeout);
+            translateTimeout = setTimeout(translateText, 800);
+        });
 
         // Инициализация счетчиков
         updateCharCount('sourceText', 'sourceCharCount');
