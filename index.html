@@ -268,7 +268,7 @@
             <div class="text-container">
                 <div class="text-box">
                     <label for="sourceText">Исходный текст:</label>
-                    <textarea id="sourceText" placeholder="Введите любой текст для перевода...">яблоко</textarea>
+                    <textarea id="sourceText" placeholder="Введите любой текст для перевода...">Привет! Как дела? Я изучаю программирование.</textarea>
                     <div class="controls">
                         <div class="char-count" id="sourceCharCount">Символов: 0</div>
                         <button class="btn btn-secondary" onclick="clearText()">
@@ -301,138 +301,177 @@
     </div>
 
     <script>
-        // Улучшенный словарь с реалистичными переводами
-        const smartDictionary = {
+        // Расширенный словарь с большим количеством слов
+        const dictionary = {
             // Русский -> Другие языки
             "ru": {
                 "яблоко": { "en": "apple", "es": "manzana", "fr": "pomme", "de": "Apfel" },
                 "привет": { "en": "hello", "es": "hola", "fr": "bonjour", "de": "hallo" },
+                "как": { "en": "how", "es": "cómo", "fr": "comment", "de": "wie" },
+                "дела": { "en": "things", "es": "cosas", "fr": "choses", "de": "Dinge" },
+                "как дела": { "en": "how are you", "es": "cómo estás", "fr": "comment ça va", "de": "wie geht's" },
                 "спасибо": { "en": "thank you", "es": "gracias", "fr": "merci", "de": "danke" },
-                "дом": { "en": "house", "es": "casa", "fr": "maison", "de": "Haus" },
-                "кот": { "en": "cat", "es": "gato", "fr": "chat", "de": "Katze" },
-                "собака": { "en": "dog", "es": "perro", "fr": "chien", "de": "Hund" },
-                "вода": { "en": "water", "es": "agua", "fr": "eau", "de": "Wasser" },
-                "солнце": { "en": "sun", "es": "sol", "fr": "soleil", "de": "Sonne" },
-                "книга": { "en": "book", "es": "libro", "fr": "livre", "de": "Buch" },
-                "город": { "en": "city", "es": "ciudad", "fr": "ville", "de": "Stadt" },
-                "машина": { "en": "car", "es": "coche", "fr": "voiture", "de": "Auto" },
-                "работа": { "en": "work", "es": "trabajo", "fr": "travail", "de": "Arbeit" },
-                "семья": { "en": "family", "es": "familia", "fr": "famille", "de": "Familie" },
-                "деньги": { "en": "money", "es": "dinero", "fr": "argent", "de": "Geld" },
-                "время": { "en": "time", "es": "tiempo", "fr": "temps", "de": "Zeit" },
+                "пожалуйста": { "en": "please", "es": "por favor", "fr": "s'il vous plaît", "de": "bitte" },
+                "да": { "en": "yes", "es": "sí", "fr": "oui", "de": "ja" },
+                "нет": { "en": "no", "es": "no", "fr": "non", "de": "nein" },
+                "хорошо": { "en": "good", "es": "bueno", "fr": "bon", "de": "gut" },
+                "плохо": { "en": "bad", "es": "malo", "fr": "mauvais", "de": "schlecht" },
                 "человек": { "en": "person", "es": "persona", "fr": "personne", "de": "Person" },
-                "друг": { "en": "friend", "es": "amigo", "fr": "ami", "de": "Freund" },
-                "любовь": { "en": "love", "es": "amor", "fr": "amour", "de": "Liebe" },
-                "жизнь": { "en": "life", "es": "vida", "fr": "vie", "de": "Leben" },
-                "мир": { "en": "world", "es": "mundo", "fr": "monde", "de": "Welt" }
+                "время": { "en": "time", "es": "tiempo", "fr": "temps", "de": "Zeit" },
+                "день": { "en": "day", "es": "día", "fr": "jour", "de": "Tag" },
+                "ночь": { "en": "night", "es": "noche", "fr": "nuit", "de": "Nacht" },
+                "дом": { "en": "house", "es": "casa", "fr": "maison", "de": "Haus" },
+                "город": { "en": "city", "es": "ciudad", "fr": "ville", "de": "Stadt" },
+                "страна": { "en": "country", "es": "país", "fr": "pays", "de": "Land" },
+                "мир": { "en": "world", "es": "mundo", "fr": "monde", "de": "Welt" },
+                "работа": { "en": "work", "es": "trabajo", "fr": "travail", "de": "Arbeit" },
+                "школа": { "en": "school", "es": "escuela", "fr": "école", "de": "Schule" },
+                "университет": { "en": "university", "es": "universidad", "fr": "université", "de": "Universität" },
+                "студент": { "en": "student", "es": "estudiante", "fr": "étudiant", "de": "Student" },
+                "учитель": { "en": "teacher", "es": "profesor", "fr": "professeur", "de": "Lehrer" },
+                "книга": { "en": "book", "es": "libro", "fr": "livre", "de": "Buch" },
+                "компьютер": { "en": "computer", "es": "computadora", "fr": "ordinateur", "de": "Computer" },
+                "программа": { "en": "program", "es": "programa", "fr": "programme", "de": "Programm" },
+                "программирование": { "en": "programming", "es": "programación", "fr": "programmation", "de": "Programmierung" },
+                "изучаю": { "en": "I study", "es": "estudio", "fr": "j'étudie", "de": "ich studiere" },
+                "я": { "en": "I", "es": "yo", "fr": "je", "de": "ich" },
+                "ты": { "en": "you", "es": "tú", "fr": "tu", "de": "du" },
+                "он": { "en": "he", "es": "él", "fr": "il", "de": "er" },
+                "она": { "en": "she", "es": "ella", "fr": "elle", "de": "sie" },
+                "мы": { "en": "we", "es": "nosotros", "fr": "nous", "de": "wir" },
+                "они": { "en": "they", "es": "ellos", "fr": "ils", "de": "sie" },
+                "есть": { "en": "to have", "es": "tener", "fr": "avoir", "de": "haben" },
+                "быть": { "en": "to be", "es": "ser", "fr": "être", "de": "sein" },
+                "делать": { "en": "to do", "es": "hacer", "fr": "faire", "de": "tun" },
+                "идти": { "en": "to go", "es": "ir", "fr": "aller", "de": "gehen" },
+                "видеть": { "en": "to see", "es": "ver", "fr": "voir", "de": "sehen" },
+                "знать": { "en": "to know", "es": "saber", "fr": "savoir", "de": "wissen" },
+                "любить": { "en": "to love", "es": "amar", "fr": "aimer", "de": "lieben" },
+                "жить": { "en": "to live", "es": "vivir", "fr": "vivre", "de": "leben" },
+                "работать": { "en": "to work", "es": "trabajar", "fr": "travailler", "de": "arbeiten" },
+                "говорить": { "en": "to speak", "es": "hablar", "fr": "parler", "de": "sprechen" },
+                "понимать": { "en": "to understand", "es": "entender", "fr": "comprendre", "de": "verstehen" },
+                "большой": { "en": "big", "es": "grande", "fr": "grand", "de": "groß" },
+                "маленький": { "en": "small", "es": "pequeño", "fr": "petit", "de": "klein" },
+                "новый": { "en": "new", "es": "nuevo", "fr": "nouveau", "de": "neu" },
+                "старый": { "en": "old", "es": "viejo", "fr": "vieux", "de": "alt" },
+                "красивый": { "en": "beautiful", "es": "hermoso", "fr": "beau", "de": "schön" },
+                "интересный": { "en": "interesting", "es": "interesante", "fr": "intéressant", "de": "interessant" },
+                "важный": { "en": "important", "es": "importante", "fr": "important", "de": "wichtig" },
+                "легкий": { "en": "easy", "es": "fácil", "fr": "facile", "de": "einfach" },
+                "сложный": { "en": "difficult", "es": "difícil", "fr": "difficile", "de": "schwierig" },
+                "быстро": { "en": "quickly", "es": "rápidamente", "fr": "rapidement", "de": "schnell" },
+                "медленно": { "en": "slowly", "es": "lentamente", "fr": "lentement", "de": "langsam" },
+                "сегодня": { "en": "today", "es": "hoy", "fr": "aujourd'hui", "de": "heute" },
+                "завтра": { "en": "tomorrow", "es": "mañana", "fr": "demain", "de": "morgen" },
+                "вчера": { "en": "yesterday", "es": "ayer", "fr": "hier", "de": "gestern" },
+                "сейчас": { "en": "now", "es": "ahora", "fr": "maintenant", "de": "jetzt" },
+                "потом": { "en": "later", "es": "después", "fr": "plus tard", "de": "später" },
+                "здесь": { "en": "here", "es": "aquí", "fr": "ici", "de": "hier" },
+                "там": { "en": "there", "es": "allí", "fr": "là", "de": "dort" },
+                "всегда": { "en": "always", "es": "siempre", "fr": "toujours", "de": "immer" },
+                "никогда": { "en": "never", "es": "nunca", "fr": "jamais", "de": "nie" },
+                "иногда": { "en": "sometimes", "es": "a veces", "fr": "parfois", "de": "manchmal" },
+                "очень": { "en": "very", "es": "muy", "fr": "très", "de": "sehr" },
+                "много": { "en": "many", "es": "muchos", "fr": "beaucoup", "de": "viele" },
+                "мало": { "en": "few", "es": "pocos", "fr": "peu", "de": "wenige" },
+                "все": { "en": "all", "es": "todo", "fr": "tout", "de": "alle" },
+                "каждый": { "en": "every", "es": "cada", "fr": "chaque", "de": "jeder" },
+                "другой": { "en": "other", "es": "otro", "fr": "autre", "de": "andere" },
+                "первый": { "en": "first", "es": "primero", "fr": "premier", "de": "erste" },
+                "последний": { "en": "last", "es": "último", "fr": "dernier", "de": "letzte" },
+                "лучший": { "en": "best", "es": "mejor", "fr": "meilleur", "de": "beste" },
+                "худший": { "en": "worst", "es": "peor", "fr": "pire", "de": "schlimmste" },
+                "дорогой": { "en": "expensive", "es": "caro", "fr": "cher", "de": "teuer" },
+                "дешевый": { "en": "cheap", "es": "barato", "fr": "bon marché", "de": "billig" },
+                "богатый": { "en": "rich", "es": "rico", "fr": "riche", "de": "reich" },
+                "бедный": { "en": "poor", "es": "pobre", "fr": "pauvre", "de": "arm" },
+                "молодой": { "en": "young", "es": "joven", "fr": "jeune", "de": "jung" },
+                "сильный": { "en": "strong", "es": "fuerte", "fr": "fort", "de": "stark" },
+                "слабый": { "en": "weak", "es": "débil", "fr": "faible", "de": "schwach" },
+                "горячий": { "en": "hot", "es": "caliente", "fr": "chaud", "de": "heiß" },
+                "холодный": { "en": "cold", "es": "frío", "fr": "froid", "de": "kalt" },
+                "теплый": { "en": "warm", "es": "cálido", "fr": "chaud", "de": "warm" },
+                "светлый": { "en": "light", "es": "claro", "fr": "clair", "de": "hell" },
+                "темный": { "en": "dark", "es": "oscuro", "fr": "sombre", "de": "dunkel" },
+                "длинный": { "en": "long", "es": "largo", "fr": "long", "de": "lang" },
+                "короткий": { "en": "short", "es": "corto", "fr": "court", "de": "kurz" },
+                "высокий": { "en": "tall", "es": "alto", "fr": "haut", "de": "hoch" },
+                "низкий": { "en": "low", "es": "bajo", "fr": "bas", "de": "niedrig" },
+                "широкий": { "en": "wide", "es": "ancho", "fr": "large", "de": "breit" },
+                "узкий": { "en": "narrow", "es": "estrecho", "fr": "étroit", "de": "eng" },
+                "глубокий": { "en": "deep", "es": "profundo", "fr": "profond", "de": "tief" },
+                "пустой": { "en": "empty", "es": "vacío", "fr": "vide", "de": "leer" },
+                "полный": { "en": "full", "es": "lleno", "fr": "plein", "de": "voll" },
+                "тяжелый": { "en": "heavy", "es": "pesado", "fr": "lourd", "de": "schwer" },
+                "легкий": { "en": "light", "es": "ligero", "fr": "léger", "de": "leicht" },
+                "правый": { "en": "right", "es": "derecho", "fr": "droit", "de": "rechts" },
+                "левый": { "en": "left", "es": "izquierdo", "fr": "gauche", "de": "links" },
+                "прямой": { "en": "straight", "es": "recto", "fr": "droit", "de": "gerade" },
+                "круглый": { "en": "round", "es": "redondo", "fr": "rond", "de": "rund" },
+                "квадратный": { "en": "square", "es": "cuadrado", "fr": "carré", "de": "quadratisch" },
+                "острый": { "en": "sharp", "es": "afilado", "fr": "tranchant", "de": "scharf" },
+                "тупой": { "en": "dull", "es": "romo", "fr": "émoussé", "de": "stumpf" },
+                "мягкий": { "en": "soft", "es": "suave", "fr": "doux", "de": "weich" },
+                "твердый": { "en": "hard", "es": "duro", "fr": "dur", "de": "hart" },
+                "гладкий": { "en": "smooth", "es": "liso", "fr": "lisse", "de": "glatt" },
+                "шероховатый": { "en": "rough", "es": "áspero", "fr": "rugueux", "de": "rau" },
+                "мокрый": { "en": "wet", "es": "mojado", "fr": "mouillé", "de": "nass" },
+                "сухой": { "en": "dry", "es": "seco", "fr": "sec", "de": "trocken" },
+                "чистый": { "en": "clean", "es": "limpio", "fr": "propre", "de": "sauber" },
+                "грязный": { "en": "dirty", "es": "sucio", "fr": "sale", "de": "schmutzig" },
+                "свежий": { "en": "fresh", "es": "fresco", "fr": "frais", "de": "frisch" },
+                "старый": { "en": "old", "es": "viejo", "fr": "vieux", "de": "alt" },
+                "новый": { "en": "new", "es": "nuevo", "fr": "nouveau", "de": "neu" },
+                "молодой": { "en": "young", "es": "joven", "fr": "jeune", "de": "jung" },
+                "здоровый": { "en": "healthy", "es": "saludable", "fr": "sain", "de": "gesund" },
+                "больной": { "en": "sick", "es": "enfermo", "fr": "malade", "de": "krank" },
+                "живой": { "en": "alive", "es": "vivo", "fr": "vivant", "de": "lebendig" },
+                "мертвый": { "en": "dead", "es": "muerto", "fr": "mort", "de": "tot" },
+                "счастливый": { "en": "happy", "es": "feliz", "fr": "heureux", "de": "glücklich" },
+                "грустный": { "en": "sad", "es": "triste", "fr": "triste", "de": "traurig" },
+                "сердитый": { "en": "angry", "es": "enojado", "fr": "en colère", "de": "wütend" },
+                "спокойный": { "en": "calm", "es": "calmado", "fr": "calme", "de": "ruhig" },
+                "взволнованный": { "en": "excited", "es": "emocionado", "fr": "excité", "de": "aufgeregt" },
+                "уставший": { "en": "tired", "es": "cansado", "fr": "fatigué", "de": "müde" },
+                "бодрый": { "en": "energetic", "es": "enérgico", "fr": "énergique", "de": "energisch" },
+                "сонный": { "en": "sleepy", "es": "soñoliento", "fr": "somnolent", "de": "schläfrig" },
+                "голодный": { "en": "hungry", "es": "hambriento", "fr": "affamé", "de": "hungrig" },
+                "сытый": { "en": "full", "es": "lleno", "fr": "rassasié", "de": "satt" },
+                "жаждущий": { "en": "thirsty", "es": "sediento", "fr": "assoiffé", "de": "durstig" },
+                "злой": { "en": "evil", "es": "malvado", "fr": "méchant", "de": "böse" },
+                "добрый": { "en": "kind", "es": "amable", "fr": "gentil", "de": "nett" },
+                "умный": { "en": "smart", "es": "inteligente", "fr": "intelligent", "de": "klug" },
+                "глупый": { "en": "stupid", "es": "estúpido", "fr": "stupide", "de": "dumm" },
+                "красный": { "en": "red", "es": "rojo", "fr": "rouge", "de": "rot" },
+                "синий": { "en": "blue", "es": "azul", "fr": "bleu", "de": "blau" },
+                "зеленый": { "en": "green", "es": "verde", "fr": "vert", "de": "grün" },
+                "желтый": { "en": "yellow", "es": "amarillo", "fr": "jaune", "de": "gelb" },
+                "белый": { "en": "white", "es": "blanco", "fr": "blanc", "de": "weiß" },
+                "черный": { "en": "black", "es": "negro", "fr": "noir", "de": "schwarz" },
+                "оранжевый": { "en": "orange", "es": "naranja", "fr": "orange", "de": "orange" },
+                "фиолетовый": { "en": "purple", "es": "púrpura", "fr": "violet", "de": "lila" },
+                "розовый": { "en": "pink", "es": "rosa", "fr": "rose", "de": "rosa" },
+                "коричневый": { "en": "brown", "es": "marrón", "fr": "marron", "de": "braun" },
+                "серый": { "en": "gray", "es": "gris", "fr": "gris", "de": "grau" }
             },
+            
             // Английский -> Другие языки
             "en": {
-                "apple": { "ru": "яблоко", "es": "manzana", "fr": "pomme", "de": "Apfel" },
                 "hello": { "ru": "привет", "es": "hola", "fr": "bonjour", "de": "hallo" },
+                "goodbye": { "ru": "до свидания", "es": "adiós", "fr": "au revoir", "de": "auf Wiedersehen" },
                 "thank you": { "ru": "спасибо", "es": "gracias", "fr": "merci", "de": "danke" },
+                "please": { "ru": "пожалуйста", "es": "por favor", "fr": "s'il vous plaît", "de": "bitte" },
+                "yes": { "ru": "да", "es": "sí", "fr": "oui", "de": "ja" },
+                "no": { "ru": "нет", "es": "no", "fr": "non", "de": "nein" },
+                "apple": { "ru": "яблоко", "es": "manzana", "fr": "pomme", "de": "Apfel" },
                 "house": { "ru": "дом", "es": "casa", "fr": "maison", "de": "Haus" },
-                "cat": { "ru": "кот", "es": "gato", "fr": "chat", "de": "Katze" }
+                "car": { "ru": "машина", "es": "coche", "fr": "voiture", "de": "Auto" },
+                "computer": { "ru": "компьютер", "es": "computadora", "fr": "ordinateur", "de": "Computer" },
+                "programming": { "ru": "программирование", "es": "programación", "fr": "programmation", "de": "Programmierung" },
+                "I study": { "ru": "я изучаю", "es": "yo estudio", "fr": "j'étudie", "de": "ich studiere" }
             }
         };
-
-        // Паттерны для разных языков (для неизвестных слов)
-        const languagePatterns = {
-            "en": {
-                vowels: "aeiou",
-                consonants: "bcdfghjklmnpqrstvwxyz",
-                commonEndings: ["ing", "ed", "s", "ly", "ment", "tion", "ness"],
-                wordLength: { min: 3, max: 10 }
-            },
-            "es": {
-                vowels: "aeiouáéíóú",
-                consonants: "bcdfghjklmnñpqrstvwxyz",
-                commonEndings: ["ar", "er", "ir", "ado", "ido", "ando", "iendo"],
-                wordLength: { min: 3, max: 12 }
-            },
-            "fr": {
-                vowels: "aeiouàâäéèêëïîôöùûüÿ",
-                consonants: "bcçdfghjklmnpqrstvwxyz",
-                commonEndings: ["er", "ir", "re", "é", "ée", "ement", "tion"],
-                wordLength: { min: 3, max: 11 }
-            },
-            "de": {
-                vowels: "aeiouäöü",
-                consonants: "bcdfghjklmnpqrstvwxyzß",
-                commonEndings: ["en", "er", "e", "t", "ung", "heit", "keit"],
-                wordLength: { min: 3, max: 15 }
-            },
-            "ru": {
-                vowels: "аеёиоуыэюя",
-                consonants: "бвгджзйклмнпрстфхцчшщ",
-                commonEndings: ["ый", "ой", "ая", "ое", "ие", "ов", "ев", "ин"],
-                wordLength: { min: 2, max: 14 }
-            }
-        };
-
-        // Функция для создания реалистичного псевдоперевода
-        function createSmartTranslation(text, sourceLang, targetLang) {
-            if (!text.trim()) return '';
-            
-            // Если есть точный перевод в словаре, используем его
-            const lowerText = text.toLowerCase().trim();
-            if (smartDictionary[sourceLang] && smartDictionary[sourceLang][lowerText]) {
-                const translation = smartDictionary[sourceLang][lowerText][targetLang];
-                if (translation) {
-                    // Сохраняем регистр
-                    if (text === text.toUpperCase()) {
-                        return translation.toUpperCase();
-                    } else if (text[0] === text[0].toUpperCase()) {
-                        return translation.charAt(0).toUpperCase() + translation.slice(1);
-                    }
-                    return translation;
-                }
-            }
-            
-            // Для неизвестных слов создаем реалистичный псевдоперевод
-            return generateRealisticWord(text, targetLang);
-        }
-
-        // Генерация реалистичного слова для целевого языка
-        function generateRealisticWord(word, targetLang) {
-            const pattern = languagePatterns[targetLang] || languagePatterns["en"];
-            const wordLength = Math.max(
-                pattern.wordLength.min,
-                Math.min(pattern.wordLength.max, word.length)
-            );
-            
-            let result = '';
-            let lastWasVowel = Math.random() > 0.5;
-            
-            for (let i = 0; i < wordLength; i++) {
-                if (lastWasVowel) {
-                    // Добавляем согласную
-                    const cons = pattern.consonants;
-                    result += cons[Math.floor(Math.random() * cons.length)];
-                    lastWasVowel = false;
-                } else {
-                    // Добавляем гласную
-                    const vows = pattern.vowels;
-                    result += vows[Math.floor(Math.random() * vows.length)];
-                    lastWasVowel = true;
-                }
-            }
-            
-            // Иногда добавляем общее окончание
-            if (Math.random() > 0.7 && pattern.commonEndings.length > 0) {
-                const ending = pattern.commonEndings[Math.floor(Math.random() * pattern.commonEndings.length)];
-                result += ending;
-            }
-            
-            // Сохраняем регистр оригинала
-            if (word === word.toUpperCase()) {
-                return result.toUpperCase();
-            } else if (word[0] === word[0].toUpperCase()) {
-                return result.charAt(0).toUpperCase() + result.slice(1);
-            }
-            
-            return result;
-        }
 
         // Инициализация при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
@@ -453,7 +492,7 @@
             countElement.textContent = 'Символов: ' + textarea.value.length;
         }
 
-        // Основная функция перевода
+        // Улучшенная функция перевода
         function translateText() {
             const sourceText = document.getElementById('sourceText').value;
             const sourceLang = document.getElementById('sourceLang').value;
@@ -467,22 +506,69 @@
             }
             
             // Показываем сообщение о переводе
-            translatedText.value = '🔄 Анализируем текст...';
+            translatedText.value = '🔄 Перевод...';
             
             // Имитация задержки обработки
             setTimeout(() => {
                 let translation = '';
-                const words = sourceText.split(/(\s+)/);
+                const sentences = sourceText.split(/([.!?]+)/);
                 
-                for (let word of words) {
-                    if (word.trim() === '') {
-                        translation += word;
+                for (let i = 0; i < sentences.length; i++) {
+                    let sentence = sentences[i];
+                    if (!sentence.trim()) continue;
+                    
+                    // Если это знак препинания, просто добавляем его
+                    if (/[.!?]/.test(sentence)) {
+                        translation += sentence;
                         continue;
                     }
                     
-                    // Переводим каждое слово отдельно
-                    const translatedWord = createSmartTranslation(word, sourceLang, targetLang);
-                    translation += translatedWord;
+                    // Разбиваем предложение на слова
+                    const words = sentence.split(/(\s+)/);
+                    let translatedSentence = '';
+                    
+                    for (let j = 0; j < words.length; j++) {
+                        let word = words[j];
+                        if (!word.trim()) {
+                            translatedSentence += word;
+                            continue;
+                        }
+                        
+                        // Ищем перевод в словаре
+                        const lowerWord = word.toLowerCase();
+                        let translatedWord = null;
+                        
+                        // Сначала ищем точное совпадение
+                        if (dictionary[sourceLang] && dictionary[sourceLang][lowerWord]) {
+                            translatedWord = dictionary[sourceLang][lowerWord][targetLang];
+                        }
+                        
+                        // Если не нашли, ищем совпадение без учета окончаний
+                        if (!translatedWord) {
+                            for (const [key, translations] of Object.entries(dictionary[sourceLang] || {})) {
+                                if (lowerWord.startsWith(key) || key.startsWith(lowerWord)) {
+                                    translatedWord = translations[targetLang];
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        // Если перевод найден, применяем его с сохранением регистра
+                        if (translatedWord) {
+                            if (word === word.toUpperCase()) {
+                                translatedSentence += translatedWord.toUpperCase();
+                            } else if (word[0] === word[0].toUpperCase()) {
+                                translatedSentence += translatedWord.charAt(0).toUpperCase() + translatedWord.slice(1);
+                            } else {
+                                translatedSentence += translatedWord;
+                            }
+                        } else {
+                            // Если перевод не найден, оставляем оригинальное слово
+                            translatedSentence += word;
+                        }
+                    }
+                    
+                    translation += translatedSentence;
                 }
                 
                 translatedText.value = translation;
